@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: cart-microservice-nodejs
+  name: {{ .Release.Name}}-deployment
   labels:
-    app: cart-microservice
+    app: {{ .Values.app }}
 spec:
   selector:
       matchLabels:
-        app: cart-microservice
+        app: {{ .Values.app }}
   template:
     metadata:
       labels:
-        app: cart-microservice
+        app: {{ .Values.app }}
     spec:
       containers:
       - name: cart-microservice
-        image: nodejs-webapp  
+        image: {{ .Values.image }}  
         imagePullPolicy: IfNotPresent

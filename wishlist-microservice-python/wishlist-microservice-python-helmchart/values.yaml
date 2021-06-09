@@ -1,0 +1,5 @@
+image: wishlist-app 
+app: wishlist
+port: 1003
+containername: wishlist-microsevice-python
+name: wishpython-app

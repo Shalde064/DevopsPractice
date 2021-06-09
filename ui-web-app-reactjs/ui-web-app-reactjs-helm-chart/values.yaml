@@ -1,0 +1,4 @@
+image: react-app:latest
+app: ui-react-webapp
+port: 8080
+containername: "react-webui-app"

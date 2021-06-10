@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name}}-deployment
+  labels:
+    app: {{ .Release.Name}}-label 
+spec:
+  selector:
+      matchLabels:
+        app: {{ .Release.Name}}-label
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name}}-label
+    spec:
+      containers:
+      - name: {{ .Values.containername }}
+        image: {{ .Values.image }}:{{ .Values.imageTag }}
+        imagePullPolicy: IfNotPresent
+

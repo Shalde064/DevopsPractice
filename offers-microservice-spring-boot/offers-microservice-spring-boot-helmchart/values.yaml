@@ -1,0 +1,9 @@
+image: offers-microsvc-app
+imageTag: "latest"
+containername: offers-msv
+name: offers-microservice 
+
+service:
+  type: ClusterIP
+  port: 1001
+

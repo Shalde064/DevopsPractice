@@ -1,0 +1,8 @@
+image: shoes-microsvc-app
+imageTag: "latest"
+containername: shoes-msv
+
+service:
+  type: ClusterIP
+  port: 1002
+

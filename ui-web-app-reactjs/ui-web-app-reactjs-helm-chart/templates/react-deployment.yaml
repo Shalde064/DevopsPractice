@@ -1,19 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name}}-deployment
+  name: {{ .Release.Name }}
   labels:
-    app: {{ .Values.app }}
+    app: {{ .Release.Name}}-label
 spec:
+  strategy:
+{{ toYaml .Values.strategy | indent 4 }}
   selector:
-      matchLabels:
-        app: {{ .Values.app }}
+    matchLabels:
+      app: {{ .Release.Name}}-label
   template:
     metadata:
       labels:
-        app: {{ .Values.app }}
+        app: {{ .Release.Name}}-label
     spec:
       containers:
-      - name: {{ .Values.containername }}
-        image: {{ .Values.image }}
-        imagePullPolicy: IfNotPresent
+      - name: {{ .Release.Name }}
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+        ports:
+        -   containerPort: 80
+        livenessProbe:
+          httpGet:
+            path: /ping
+            port: {{ .Values.service.port}}
+          initialDelaySeconds: {{ .Values.livenessProbe.initialDelaySeconds }}
+          periodSeconds: {{ .Values.livenessProbe.periodSeconds }}
+          timeoutSeconds: {{ .Values.livenessProbe.timeoutSeconds }}
+          successThreshold: {{ .Values.livenessProbe.successThreshold }}
+          failureThreshold: {{ .Values.livenessProbe.failureThreshold }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}

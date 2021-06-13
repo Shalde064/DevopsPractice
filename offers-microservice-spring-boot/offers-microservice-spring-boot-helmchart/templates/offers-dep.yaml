@@ -1,20 +1,25 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: {{ .Release.Name}}-deployment
+  name: {{ .Release.Name }}
   labels:
-    app: {{ .Release.Name}}-label 
+    app: {{ .Release.Name}}-label
 spec:
+  strategy:
+{{ toYaml .Values.strategy | indent 4 }}
   selector:
-      matchLabels:
-        app: {{ .Release.Name}}-label
+    matchLabels:
+      app: {{ .Release.Name}}-label
   template:
     metadata:
       labels:
         app: {{ .Release.Name}}-label
     spec:
       containers:
-      - name: {{ .Values.containername }}
-        image: {{ .Values.image }}
-        imagePullPolicy: IfNotPresent
-
+      - name: {{ .Release.Name }}
+        image: "{{ .Values.image }}:{{ .Values.imageTag }}"
+        imagePullPolicy: {{ .Values.imagePullPolicy | quote }}
+      {{- if .Values.tolerations }}
+      tolerations:
+{{ toYaml .Values.tolerations | indent 8 }}
+      {{- end }}

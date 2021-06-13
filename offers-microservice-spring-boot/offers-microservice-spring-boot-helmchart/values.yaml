@@ -1,9 +1,15 @@
-image: offers-microsvc-app
+# Default values for offers.
+# This is a YAML-formatted file.
+# Declare variables to be passed into your templates.
+image: shalde064/offers
 imageTag: "latest"
-containername: offers-msv
-name: offers-microservice 
+imagePullPolicy: IfNotPresent
 
 service:
   type: ClusterIP
   port: 1001
 
+strategy:
+  type: Recreate
+
+tolerations: []

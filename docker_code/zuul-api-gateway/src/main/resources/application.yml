@@ -1,0 +1,16 @@
+server:
+  port : 9999
+zuul:
+  routes:
+    offer:
+      path: /offer/**
+      url: http://172.18.0.1:1001/api/v1
+    shoe:
+      path: /shoe/**
+      url: http://172.18.0.1:1002/api/v1
+    wishlist:
+      path: /wishlist/**
+      url: http://172.18.0.1:1003
+    cart:
+      path: /cart/**
+      url: http://172.18.0.1:1004/api/v1
